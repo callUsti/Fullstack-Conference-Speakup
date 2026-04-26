@@ -67,6 +67,8 @@ export async function signOutUser(userId) {
   await deleteCache(`user:${userId}`);
 }
 
+
+
 export async function getUserProfile(userId) {
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -75,16 +77,27 @@ export async function getUserProfile(userId) {
   return user ? sanitizeUser(user) : null;
 }
 
+
+
 export async function deleteUserAccount(userId, firebaseUid) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) return null;
 
-  try { await admin.auth().deleteUser(firebaseUid); } catch (e) {
-    log.warn("Failed to delete Firebase user", { firebaseUid, error: e });
-  }
+  // Delete all meetings where user is host
+  await prisma.meeting.deleteMany({ where: { hostId: userId } });
 
+  // Optionally: delete other related data (participants, invites, etc.)
+
+  // Delete user from Prisma first
   await prisma.user.delete({ where: { id: userId } });
   await deleteCache(`user:${userId}`);
+
+  // Now delete from Firebase
+  try {
+    await admin.auth().deleteUser(firebaseUid);
+  } catch (e) {
+    log.warn("Failed to delete Firebase user", { firebaseUid, error: e });
+  }
 
   await queueEmail("goodbye", user.email, { id: user.id, name: user.fullName }).catch(() => {});
 
