@@ -4,12 +4,13 @@ Cross-platform video conferencing app with a real-time AI co-pilot: live transcr
 
 <div align="center">
 
-|     |     |     |     |     |
-| --- | --- | --- | --- | --- |
-| ![](pictures/splash.png) | ![](pictures/onboard1.png) | ![](pictures/onboard2.png) | ![](pictures/onboard3.png) | ![](pictures/image7.png) |
-| ![](pictures/image54.png) | ![](pictures/image55.png) | ![](pictures/image77.png) | ![](pictures/image86.png) | ![](pictures/image130.png) |
-| ![](pictures/image133.png) | ![](pictures/image136.png) | ![](pictures/image140.png) | ![](pictures/image152.png) | ![](pictures/image154.png) |
-| ![](pictures/image155.png) | ![](pictures/image160.png) | ![](pictures/image162.png) | ![](pictures/image168.png) | ![](pictures/image176.png) |
+|     |     |     |     |
+| --- | --- | --- | --- |
+| <img src="pictures/splash.png" width="200"/> | <img src="pictures/onboard1.png" width="200"/> | <img src="pictures/onboard2.png" width="200"/> | <img src="pictures/onboard3.png" width="200"/> |
+| <img src="pictures/image7.png" width="200"/> | <img src="pictures/image54.png" width="200"/> | <img src="pictures/image55.png" width="200"/> | <img src="pictures/image77.png" width="200"/> |
+| <img src="pictures/image86.png" width="200"/> | <img src="pictures/image130.png" width="200"/> | <img src="pictures/image133.png" width="200"/> | <img src="pictures/image136.png" width="200"/> |
+| <img src="pictures/image140.png" width="200"/> | <img src="pictures/image152.png" width="200"/> | <img src="pictures/image154.png" width="200"/> | <img src="pictures/image155.png" width="200"/> |
+| <img src="pictures/image160.png" width="200"/> | <img src="pictures/image162.png" width="200"/> | <img src="pictures/image168.png" width="200"/> | <img src="pictures/image176.png" width="200"/> |
 
 </div>
 
