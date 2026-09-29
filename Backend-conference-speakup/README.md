@@ -26,48 +26,49 @@ The system of record for SpeakUp: authentication, meetings, chat, billing, recor
 ```mermaid
 flowchart TB
     subgraph Client["Clients"]
-        FL[Flutter App]
-        WEB[Next.js Web App]
+        FL["Flutter App"]
+        WEB["Next.js Web App"]
     end
 
     subgraph Edge["Edge"]
-        NG[Nginx<br/>TLS termination · reverse proxy]
+        NG["Nginx: TLS termination, reverse proxy"]
     end
 
     subgraph MW["Middleware Pipeline (index.js)"]
-        M1[Helmet / CORS / XSS]
-        M2[Body Parser · Compression]
-        M3[Request ID · Prometheus · Pino Logger]
-        M4[Global Rate Limiter]
-        M5[authenticate<br/>Firebase token → req.user]
-        M6[validateBody/Query/Params<br/>Zod]
-        M7[Route-specific limiters]
+        M1["Helmet / CORS / XSS"]
+        M2["Body Parser, Compression"]
+        M3["Request ID, Prometheus, Pino Logger"]
+        M4["Global Rate Limiter"]
+        M5["authenticate: Firebase token to req.user"]
+        M6["validateBody/Query/Params (Zod)"]
+        M7["Route-specific limiters"]
     end
 
     subgraph App["Application Layer"]
-        R[Router] --> C[Controller<br/>request in / response out]
-        C --> S[Service<br/>business logic, framework-agnostic]
+        R["Router"] --> C["Controller: request in, response out"]
+        C --> S["Service: business logic, framework-agnostic"]
     end
 
     subgraph Infra["Infrastructure & Integrations"]
-        PG[(PostgreSQL 16<br/>via Prisma)]
-        RD[(Redis<br/>cache · pub-sub · adapter)]
-        KF[[Kafka<br/>domain events]]
-        BQ[[BullMQ<br/>async jobs]]
-        WS((Socket.IO<br/>real-time push))
-        LK[LiveKit<br/>WebRTC SFU]
-        CL[Cloudinary]
-        S3[(AWS S3)]
-        ST[Stripe]
+        PG[("PostgreSQL 16 via Prisma")]
+        RD[("Redis: cache, pub-sub, adapter")]
+        KF[["Kafka: domain events"]]
+        BQ[["BullMQ: async jobs"]]
+        WS(("Socket.IO: real-time push"))
+        LK["LiveKit WebRTC SFU"]
+        CL["Cloudinary"]
+        S3[("AWS S3")]
+        ST["Stripe"]
     end
 
     subgraph Obs["Observability"]
-        SEN[Sentry]
-        PROM[Prometheus /metrics]
+        SEN["Sentry"]
+        PROM["Prometheus /metrics"]
     end
 
-    FL --> NG --> M1 --> M2 --> M3 --> M4 --> M5 --> M6 --> M7 --> R
+    FL --> NG
     WEB --> NG
+    NG --> M1 --> M2 --> M3 --> M4 --> M5 --> M6 --> M7 --> R
     S --> PG
     S --> RD
     S --> KF
@@ -77,8 +78,8 @@ flowchart TB
     S --> S3
     S --> ST
     S --> WS
-    App -.errors.-> SEN
-    MW -.metrics.-> PROM
+    S -.-> SEN
+    M3 -.-> PROM
 ```
 
 **Why this shape**: every request passes through the *same* security/validation gate regardless of route, so no controller can accidentally skip auth or input validation. The service layer is the only place business rules live — controllers stay thin, services stay portable (they're what the `workers.js` BullMQ processors and the Kafka consumers reuse, instead of duplicating logic).
