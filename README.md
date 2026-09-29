@@ -2,7 +2,7 @@
 
 Cross-platform video conferencing app with a real-time AI co-pilot: live transcription, emotion analysis, coaching, meeting memory, and 27 automated tools — built across a Flutter client, a Node.js/Express backend, and a Python/FastAPI intelligence plane.
 
-
+<div align="center">
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
@@ -11,6 +11,7 @@ Cross-platform video conferencing app with a real-time AI co-pilot: live transcr
 | ![](pictures/image133.png) | ![](pictures/image136.png) | ![](pictures/image140.png) | ![](pictures/image152.png) | ![](pictures/image154.png) |
 | ![](pictures/image155.png) | ![](pictures/image160.png) | ![](pictures/image162.png) | ![](pictures/image168.png) | ![](pictures/image176.png) |
 
+</div>
 
 ---
 
